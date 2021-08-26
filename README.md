@@ -20,7 +20,7 @@ The file should be removed afterwards to make sure that users can't browse to, a
 
 # Sample database - Login
 
-The users provided in the sample database can be logged in by using the following credentials format (`email:password`):
+The users provided in the sample database can be logged in by using the following credentials (`email:password`):
 
 **Guests**: `firstname.lastname@domain.com:firstnamelastname`
 
