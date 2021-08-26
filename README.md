@@ -12,4 +12,4 @@ The users provided in the sample database can be logged in by using the followin
 
 **Employees**: `firstname.lastname@peropetrol.com:firstnamelastname`
 
-**Administrator** credentials are as follows: `admin@peropetrol.com:peropetrol`# peropetrol
+**Administrator** credentials are as follows: `admin@peropetrol.com:peropetrol`
