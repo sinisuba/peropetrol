@@ -13,3 +13,20 @@ The users provided in the sample database can be logged in by using the followin
 **Employees**: `firstname.lastname@peropetrol.com:firstnamelastname`
 
 **Administrator** credentials are as follows: `admin@peropetrol.com:peropetrol`
+
+# Access levels
+
+Guests have the following access:
+
+- View gas information
+- Manage their own credentials
+
+Employees have the following access:
+
+- View their own employment information
+- View gas information
+- Edit gas information*
+- Add new gas*
+- Manage their own credentials
+
+\* = only available for the gas station where currently employed.
