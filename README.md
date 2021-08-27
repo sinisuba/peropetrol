@@ -30,3 +30,10 @@ Employees have the following access:
 - Manage their own credentials
 
 \* = only available for the gas station where currently employed.
+
+Administrators have the following access:
+
+- View/Edit/Delete existing employees
+- Add new employees
+- View/Edit/Delete existing gas
+- Add new gas
