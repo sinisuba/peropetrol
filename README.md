@@ -40,13 +40,15 @@ Administrators have the following access:
 
 # Database Engine connection (XAMPP/WampServer)
 
-WampServer supports both MariaDB and MySQL. If only one DB engine is enabled, there's no need to specify a port. 
+WampServer supports both MariaDB and MySQL. 
+
+If only one DB engine is enabled, there's no need to specify a port.
 
 Otherwise, a port must be specified for the connection to be established.
 
-Default ports (WampServer):
-- MySQL '3306'
-- MariaDB '3307'
+If MySQL is the default DBMS, it uses port `3306` and therefore MariaDB will use port `3307`.
+
+If MariaDB is the default DBMS, it uses port `3306` and therefore MySQL will use port `3308`.
 
 Example connection for WampServer & MariaDB: `$conn = mysqli_connect($dbServerName, $dbUsername, $dbPassword, $dbName, '3307');`
 
