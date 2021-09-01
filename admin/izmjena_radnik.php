@@ -110,8 +110,8 @@
             mysqli_stmt_bind_param($statement, $types, ...$parameters); // '...' => splat operator, can pass in parameters as an array
 
             mysqli_stmt_execute($statement);
-            
-            if (mysqli_affected_rows($conn) > 0)
+
+            if (mysqli_stmt_affected_rows($statement) > 0)
             {
                 mysqli_stmt_close($statement);
                 exit("OK");
