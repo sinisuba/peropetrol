@@ -31,6 +31,10 @@
     if (!empty($_POST['email']))
     {
         $email = $_POST['email'];
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+            exit("Uneseni email '$email' nije validan!");
+        
         if (!str_ends_with($email, "@peropetrol.com"))
             exit("Radnici moraju koristiti domen 'peropetrol.com'");
 
