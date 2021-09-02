@@ -53,3 +53,11 @@ If MariaDB is the default DBMS, it uses port `3306` and therefore MySQL will use
 Example connection for WampServer & MariaDB: `$conn = mysqli_connect($dbServerName, $dbUsername, $dbPassword, $dbName, '3307');`
 
 Since XAMPP only supports MariaDB there's no need to specify a port: `$conn = mysqli_connect($dbServerName, $dbUsername, $dbPassword, $dbName);`
+
+# Additional information - WampServer charset
+
+The default charset after WampServer's installation seems to be set to `latin1`.
+
+This could potentionally break the application (characters such as `č` would display as `?`), so changing it to `utf8mb4` is advised.
+
+More information can be found in [`dbConn.php`](https://github.com/sinisuba/peropetrol/blob/main/db/dbConn.php).
