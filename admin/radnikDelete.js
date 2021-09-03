@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var $email;
+    let $email;
 
     $(".modalButtonBrisi").click(function(){
         $("#confirmationModal").show();

@@ -19,91 +19,91 @@ if ($_SESSION['role'] !== "admin")
     <title>PeroPetrol - Lista radnika</title>
 </head>
 <body>
-    
-    <h1>PeroPetrol - Radnici</h1>
 
-    <table class="blueTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Ime</th>
-                <th>Prezime</th>
-                <th>Email</th>
-                <th>Staž</th>
-                <th>Plata</th>
-                <th>Godišnji</th>
-                <th>Pumpa</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <?php
-                    require "../db/dbConn.php";
+<h1>PeroPetrol - Radnici</h1>
 
-                    $sqlQuery = 'SELECT ID, ime, prezime, radnik_email, staz, plata, godisnji, pumpa FROM radnici;';
+<table class="blueTable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Ime</th>
+        <th>Prezime</th>
+        <th>Email</th>
+        <th>Staž</th>
+        <th>Plata</th>
+        <th>Godišnji</th>
+        <th>Pumpa</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <?php
+        require "../db/dbConn.php";
 
-                    $statement = mysqli_stmt_init($conn);
+        $sqlQuery = 'SELECT ID, ime, prezime, radnik_email, staz, plata, godisnji, pumpa FROM radnici;';
 
-                    if (!mysqli_stmt_prepare($statement, $sqlQuery))
-                        echo "<i> Greška, pokušajte ponovo. </i>";
-                    else
-                    {
-                        mysqli_stmt_execute($statement);
+        $statement = mysqli_stmt_init($conn);
 
-                        $queryResult = mysqli_stmt_get_result($statement);
+        if (!mysqli_stmt_prepare($statement, $sqlQuery))
+            echo "<i> Greška, pokušajte ponovo. </i>";
+        else
+        {
+            mysqli_stmt_execute($statement);
 
-                        while ($currentRow = mysqli_fetch_assoc($queryResult))
-                            echo "<tr> <td>" . $currentRow['ID'] . "<td>" . $currentRow['ime'] . " </td> <td>" . $currentRow['prezime'] . "</td> <td class='currentRowEmail'>" . $currentRow['radnik_email'] . "</td> <td>" . $currentRow['staz'] . "</td> <td>" . $currentRow['plata'] . ' KM' . "</td> <td>" . $currentRow['godisnji'] . "</td> <td>" . $currentRow['pumpa'] . "</td> <td class='center'><button class='form_button modalButtonBrisi'>BRIŠI</button></td> <td class='center'><button class='form_button modalButtonIzmjena'>IZMIJENI</button></td> </tr>";
-                    }
+            $queryResult = mysqli_stmt_get_result($statement);
 
-                    mysqli_stmt_close($statement);
-                ?>
-            </tr>
-        </tbody>
-    </table>
+            while ($currentRow = mysqli_fetch_assoc($queryResult))
+                echo "<tr> <td>" . $currentRow['ID'] . "<td>" . $currentRow['ime'] . " </td> <td>" . $currentRow['prezime'] . "</td> <td class='currentRowEmail'>" . $currentRow['radnik_email'] . "</td> <td>" . $currentRow['staz'] . "</td> <td>" . $currentRow['plata'] . '' . "</td> <td>" . $currentRow['godisnji'] . "</td> <td>" . $currentRow['pumpa'] . "</td> <td class='center'><button class='form_button modalButtonBrisi'>BRIŠI</button></td> <td class='center'><button class='form_button modalButtonIzmjena'>IZMIJENI</button></td> </tr>";
+        }
 
-    <div id="confirmationModal" class="modal">
-        <div class="modal-content">
-            <button class="closeModal">&times;</button>
-            <p class="confirmationText"></p>
-            <button id="buttonDeleteYes" class="form_button">Da</button>
-            <button id="buttonDeleteNo" class="form_button">Ne</button>
+        mysqli_stmt_close($statement);
+        ?>
+    </tr>
+    </tbody>
+</table>
 
-            <p class="confirmationModalErrMsg"></p>
-        </div>
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <button class="closeModal">&times;</button>
+        <p class="confirmationText"></p>
+        <button id="buttonDeleteYes" class="form_button">Da</button>
+        <button id="buttonDeleteNo" class="form_button">Ne</button>
+
+        <p class="confirmationModalErrMsg"></p>
     </div>
-    
-    <div id="editUserModal" class="modal">
-        <div class="modal-content">
-            <button class="closeModal">&times;</button>
+</div>
 
-            <h2> PeroPetrol - Izmjena podataka </h2>
+<div id="editUserModal" class="modal">
+    <div class="modal-content">
+        <button class="closeModal editUserModalClose">&times;</button>
 
-            <p class="selectedRadnik"></p>
+        <h2> PeroPetrol - Izmjena podataka </h2>
 
-            <form action="izmjena_radnik.php" method="POST">
-                <p><input type="text" placeholder="Novo ime radnika" name="firstname"></p>
-                <p><input type="text" placeholder="Novo prezime radnika" name="lastname"></p>
-                <p><input type="email" placeholder="Novi email radnika" name="email"></p>
-                <p><input type="password" placeholder="Nova lozinka radnika" name="password"></p>
-                <p><input type="number" min="0" placeholder="Novi staž" name="staz"></p>
-                <p><input type="number" min="0" step="0.01" placeholder="Nova plata" name="plata"></p>
-                <p><input type="number" min="0" placeholder="Novi godišnji odmor" name="godisnji"></p>
+        <p id="selectedRadnik"></p>
 
-                <input list="pumpe" placeholder="Nova pumpa radnika" name="pumpa" pattern="Obilićevo|Starčevica|Petrićevac">
-                <datalist id="pumpe">
+        <form action="izmjena_radnik.php" method="POST" id="form_RadnikEdit">
+            <p><input type="text" placeholder="Novo ime radnika" name="firstname"></p>
+            <p><input type="text" placeholder="Novo prezime radnika" name="lastname"></p>
+            <p><input type="email" placeholder="Novi email radnika" name="email"></p>
+            <p><input type="password" placeholder="Nova lozinka radnika" name="password"></p>
+            <p><input type="number" min="0" placeholder="Novi staž" name="staz"></p>
+            <p><input type="number" min="0" step="0.01" placeholder="Nova plata" name="plata"></p>
+            <p><input type="number" min="0" placeholder="Novi godišnji odmor" name="godisnji"></p>
+
+            <input list="pumpe" placeholder="Nova pumpa radnika" name="pumpa" pattern="Obilićevo|Starčevica|Petrićevac">
+            <datalist id="pumpe">
                 <option value="Obilićevo">
                 <option value="Starčevica">
                 <option value="Petrićevac">
-                </datalist>
-                
-                <p><input class="form_button" type="submit" value="Izmijeni radnika"></p>
-            </form>
+            </datalist>
 
-            <p class="editUserModalErrMsg"></p>
+            <p><input class="form_button" type="submit" value="Izmijeni radnika"></p>
+        </form>
 
-        </div>
+        <p class="editUserModalErrMsg"></p>
+
     </div>
-    
+</div>
+
 </body>
 </html>

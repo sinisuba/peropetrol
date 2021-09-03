@@ -1,6 +1,6 @@
 <?php
     session_start();
-    
+
     if ($_SESSION['role'] !== "admin")
         header("Location: https://localhost/peropetrol/");
 
@@ -10,98 +10,46 @@
     $types = "";
     $parameters = array();
 
-    if (!empty($_POST['firstname']))
-    {
-        $firstname = $_POST['firstname'];
-        
-        $sqlQuery .= "ime = ?,";
-        $types .= "s";
-        $parameters[] = $firstname;
-    }
-
-    if (!empty($_POST['lastname']))
-    {
-        $lastname = $_POST['lastname'];
-
-        $sqlQuery .= "prezime = ?,";
-        $types .= "s";
-        $parameters[] = $lastname;
-    }
-
-    if (!empty($_POST['email']))
+    if (empty($_POST['firstname']) || empty($_POST['lastname']) || empty($_POST['email']) || empty($_POST['staz']) || empty($_POST['plata']) || empty($_POST['godisnji']) || empty($_POST['pumpa']))
+        exit("Popunite sva polja (osim lozinke)!");
+    else
     {
         $email = $_POST['email'];
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL))
             exit("Uneseni email '$email' nije validan!");
-        
+
         if (!str_ends_with($email, "@peropetrol.com"))
             exit("Radnici moraju koristiti domen 'peropetrol.com'");
 
-        $sqlQuery .= "radnik_email = ?,";
-        $types .= "s";
-        $parameters[] = $email;
-    }
-
-    if (!empty($_POST['password']))
-    {
-        $password = $_POST['password'];
-        if (strlen($password) < 8)
-            exit("Lozinka mora sadržati minimalno 8 karaktera!");
-        
-        $sqlQuery .= "radnik_password = ?,";
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-        $types .= "s";
-        $parameters[] = $hash;
-    }
-
-    if (!empty($_POST['staz']))
-    {
-        $staz = $_POST['staz'];
-        if ($staz < 0)
+        if ($_POST['staz'] < 0)
             exit("Staž ne može biti negativan!");
 
-        $sqlQuery .= "staz = ?,";
-        $types .= "i";
-        $parameters[] = $staz;
-    }
-
-    if (!empty($_POST['plata']))
-    {
-        $plata = $_POST['plata'];
-        if ($plata < 0)
+        if ($_POST['plata'] < 0)
             exit("Plata ne može biti negativna!");
 
-        $sqlQuery .= "plata = ?,";
-        $types .= "d";
-        $parameters[] = $plata;
-    }
-
-    if (!empty($_POST['godisnji']))
-    {
-        $godisnji = $_POST['godisnji'];
-        if ($godisnji < 0)
+        if ($_POST['godisnji'] < 0)
             exit("Godišnji odmor ne može biti negativan!");
 
-        $sqlQuery .= "godisnji = ?,";
-        $types .= "i";
-        $parameters[] = $godisnji;
-    }
-
-    if (!empty($_POST['pumpa']))
-    {
-        $pumpa = $_POST['pumpa'];
-        if (!in_array($pumpa, ["Obilićevo", "Starčevica", "Petrićevac"]))
+        if (!in_array($_POST['pumpa'], ["Obilićevo", "Starčevica", "Petrićevac"]))
             exit("Odaberite jednu od ponuđenih pumpi!");
 
-        $sqlQuery .= "pumpa = ?,";
-        $types .= "s";
-        $parameters[] = $pumpa;
-    }
+        $sqlQuery .= "ime = ?, prezime = ?, radnik_email = ?, staz = ?, plata = ?, godisnji = ?, pumpa = ?";
+        $types = "sssidis";
 
-    if (count($parameters) > 0)
-    {
-        $sqlQuery = substr($sqlQuery, 0, -1); // drop last comma
+        $parameters = [$_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['staz'], $_POST['plata'], $_POST['godisnji'], $_POST['pumpa']];
+
+        if (!empty($_POST['password']))
+        {
+            $password = $_POST['password'];
+            if (strlen($password) < 8)
+                exit("Lozinka mora sadržati minimalno 8 karaktera!");
+
+            $sqlQuery .= ", radnik_password = ?";
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+            $types .= "s";
+            $parameters[] = $hash;
+        }
 
         $sqlQuery .= " WHERE radnik_email = ?;";
         $types .= "s";
@@ -131,9 +79,4 @@
             mysqli_stmt_close($statement);
             exit("Greška, pokušajte ponovo.");
         }
-    }
-    else
-    {
-        mysqli_stmt_close($statement);
-        exit("Unesite podatke!");
     }
