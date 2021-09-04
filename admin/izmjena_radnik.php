@@ -35,7 +35,7 @@
             exit("Odaberite jednu od ponuđenih pumpi!");
 
         $sqlQuery .= "ime = ?, prezime = ?, radnik_email = ?, staz = ?, plata = ?, godisnji = ?, pumpa = ?";
-        $types = "sssidis";
+        $types = "sssidis"; // string, int, double
 
         $parameters = [$_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['staz'], $_POST['plata'], $_POST['godisnji'], $_POST['pumpa']];
 
@@ -46,9 +46,8 @@
                 exit("Lozinka mora sadržati minimalno 8 karaktera!");
 
             $sqlQuery .= ", radnik_password = ?";
-            $hash = password_hash($password, PASSWORD_DEFAULT);
             $types .= "s";
-            $parameters[] = $hash;
+            $parameters[] = password_hash($password, PASSWORD_DEFAULT);
         }
 
         $sqlQuery .= " WHERE radnik_email = ?;";

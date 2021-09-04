@@ -32,33 +32,33 @@ window.addEventListener("DOMContentLoaded", function()
         event.preventDefault();
 
         let xhr = new XMLHttpRequest();
-        let data = new FormData(this); // FormData(document.getElementById("form_RadnikEdit"));
+        let data = new FormData(this); // this => document.getElementById("form_RadnikEdit");
 
         xhr.onreadystatechange = function()
         {
             if (xhr.readyState === 4) // XMLHttpRequest.DONE
             {
-                if (xhr.status === 200 && xhr.responseText === "OK")
+                if (xhr.status === 200)
                 {
-                    alert("Radnik uspješno izmijenjen.");
-                }
-                else if (xhr.status === 200 && xhr.responseText !== "OK")
-                {
-                    document.getElementById("editUserModalErrMsg").style.color = "red";
-                    document.getElementById("editUserModalErrMsg").innerHTML = "<b>" + xhr.responseText + "</b>";
+                    if (xhr.responseText === "OK")
+                        alert("Radnik uspješno izmijenjen.");
+                    else
+                    {
+                        document.getElementById("editUserModalErrMsg").style.color = "red";
+                        document.getElementById("editUserModalErrMsg").innerHTML = "<b>" + xhr.responseText + "</b>";
+                    }
                 }
                 else
-                {
-                    console.log("Error updating employee");
-                }
+                    alert("Greška, pokušajte ponovo!");
             }
         }
+
         xhr.open('POST', 'izmjena_radnik.php', true);
         data.append("selectedUserEmail", email);
         xhr.send(data);
     }
 
-    document.getElementsByClassName("editUserModalClose")[0].onclick = function()
+    document.getElementById("editUserModalClose").onclick = function()
     {
         document.getElementById("editUserModal").style.display = "none";
     };

@@ -64,18 +64,18 @@ if ($_SESSION['role'] !== "admin")
 
 <div id="confirmationModal" class="modal">
     <div class="modal-content">
-        <button class="closeModal">&times;</button>
-        <p class="confirmationText"></p>
+        <button class="closeModal" id="deleteUserModalClose">&times;</button>
+        <p id="confirmationText"></p>
         <button id="buttonDeleteYes" class="form_button">Da</button>
         <button id="buttonDeleteNo" class="form_button">Ne</button>
 
-        <p class="confirmationModalErrMsg"></p>
+        <p id="confirmationModalErrMsg"></p>
     </div>
 </div>
 
 <div id="editUserModal" class="modal">
     <div class="modal-content">
-        <button class="closeModal editUserModalClose">&times;</button>
+        <button class="closeModal" id="editUserModalClose">&times;</button>
 
         <h2> PeroPetrol - Izmjena podataka </h2>
 
@@ -100,7 +100,7 @@ if ($_SESSION['role'] !== "admin")
             <p><input class="form_button" type="submit" value="Izmijeni radnika"></p>
         </form>
 
-        <p class="editUserModalErrMsg"></p>
+        <p id="editUserModalErrMsg"></p>
 
     </div>
 </div>
