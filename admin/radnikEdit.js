@@ -48,12 +48,11 @@ window.addEventListener("DOMContentLoaded", function()
                         document.getElementById("editUserModalErrMsg").innerHTML = "<b>" + xhr.responseText + "</b>";
                     }
                 }
-                else
-                    alert("Greška, pokušajte ponovo!");
+                else alert("Greška, pokušajte ponovo!");
             }
         }
 
-        xhr.open('POST', 'izmjena_radnik.php', true);
+        xhr.open('POST', 'izmjena_radnik.php');
         data.append("selectedUserEmail", email);
         xhr.send(data);
     }

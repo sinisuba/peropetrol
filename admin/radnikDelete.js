@@ -37,12 +37,11 @@ window.addEventListener("DOMContentLoaded", function()
                         document.getElementById("confirmationModalErrMsg").innerHTML = "<b>" + xhr.responseText + "</b>";
                     }
                 }
-                else
-                    alert("Greška, pokušajte ponovo!");
+                else alert("Greška, pokušajte ponovo!");
             }
         }
 
-        xhr.open('POST', 'brisi_radnika.php', true);
+        xhr.open('POST', 'brisi_radnika.php');
         data.append("radnik_email", email)
         xhr.send(data);
     }

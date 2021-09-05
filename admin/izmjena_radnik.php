@@ -10,7 +10,7 @@
     $types = "";
     $parameters = array();
 
-    if (empty($_POST['firstname']) || empty($_POST['lastname']) || empty($_POST['email']) || empty($_POST['staz']) || empty($_POST['plata']) || empty($_POST['godisnji']) || empty($_POST['pumpa']))
+    if (empty($_POST['firstname']) || empty($_POST['lastname']) || empty($_POST['email']) || !is_numeric($_POST['staz']) || !is_numeric($_POST['plata']) || !is_numeric($_POST['godisnji']) || empty($_POST['pumpa']))
         exit("Popunite sva polja (osim lozinke)!");
     else
     {
