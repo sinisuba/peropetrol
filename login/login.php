@@ -17,7 +17,7 @@
             $korisnik = "admin";
             $sqlQuery = "SELECT admin_password FROM admin WHERE admin_email=?";
         }
-        else if (str_ends_with($email, "@peropetrol.com"))
+        else if (substr($email, -15) === "@peropetrol.com")
         {
             $korisnik = "radnik";
             $sqlQuery = "SELECT radnik_password FROM radnici WHERE radnik_email=?";

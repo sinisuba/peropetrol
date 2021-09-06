@@ -25,12 +25,12 @@
     if ($newEmail === $currentEmail)
         exit('Stari i novi mejl se moraju razlikovati!');
 
-    if (str_ends_with($currentEmail, "@peropetrol.com"))
+    if (substr($currentEmail, -15) === "@peropetrol.com")
     {
-        if (!str_ends_with($newEmail, "@peropetrol.com"))
+        if (substr($newEmail, -15) !== "@peropetrol.com")
             exit("Zaposleni PeroPetrola moraju koristiti domen 'peropetrol.com'");
 
-        if (str_contains($newEmail, "admin"))
+        if (strpos($newEmail, "admin") !== false)
             exit('Zabranjen mejl!');
 
         $checkIfExists = "SELECT radnik_password FROM radnici WHERE radnik_email=?;";
@@ -40,7 +40,7 @@
     }
     else
     {
-        if (str_ends_with($newEmail, "@peropetrol.com"))
+        if (substr($newEmail, -15) === "@peropetrol.com")
             exit("Domen 'peropetrol.com' je rezervisan za zaposlene PeroPetrola. <br> Molimo Vas da odaberete drugu email adresu.");
 
         $checkIfExists = "SELECT korisnik_password FROM korisnici WHERE korisnik_email=?;";

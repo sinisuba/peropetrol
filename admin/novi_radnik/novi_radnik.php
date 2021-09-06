@@ -30,11 +30,11 @@
         exit("Lozinka mora sadržati minimalno 8 karaktera!");
     else if ($password !== $password_repeat)
         exit("Unesene lozinke se ne podudaraju!");
-    else if (!str_ends_with($email, "@peropetrol.com"))
+    else if (substr($email, -15) !== "@peropetrol.com")
         exit("Radnici moraju koristiti domen 'peropetrol.com'");
     else if (!in_array($pumpa, ["Obilićevo", "Starčevica", "Petrićevac"]))
         exit("Odaberite jednu od ponuđenih pumpi!");
-    else if (str_contains($email, "admin"))
+    else if (strpos($email, "admin") !== false)
         exit("Zabranjen mejl!");
     else
     {

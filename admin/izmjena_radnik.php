@@ -19,7 +19,7 @@
         if (!filter_var($email, FILTER_VALIDATE_EMAIL))
             exit("Uneseni email '$email' nije validan!");
 
-        if (!str_ends_with($email, "@peropetrol.com"))
+        if (substr($email, -15) !== "@peropetrol.com")
             exit("Radnici moraju koristiti domen 'peropetrol.com'");
 
         if ($_POST['staz'] < 0)

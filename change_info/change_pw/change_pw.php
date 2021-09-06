@@ -29,7 +29,7 @@
     if ($currentPW === $newPW)
         exit('Stara i nova lozinka se moraju razlikovati!');
 
-    if (str_ends_with($currentEmail, "@peropetrol.com"))
+    if (substr($currentEmail, -15) === "@peropetrol.com")
     {
         $checkIfExists = "SELECT radnik_password FROM radnici WHERE radnik_email=?;";
         $setNewPW = "UPDATE radnici SET radnik_password = ? WHERE radnik_email = ?;";

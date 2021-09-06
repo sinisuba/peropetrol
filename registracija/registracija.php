@@ -21,14 +21,14 @@
         echo "Uneseni email '$email' nije validan!";
     else if (!in_array($pumpa, ["Obilićevo", "Starčevica", "Petrićevac", "Gost"]))
         echo "Odaberite jednu od ponuđenih pumpi!";
-    else if ($pumpa === "Gost" && str_ends_with($email, "@peropetrol.com"))
+    else if ($pumpa === "Gost" && substr($email, -15)  === "@peropetrol.com")
         echo "Domen 'peropetrol.com' je rezervisan za zaposlene PeroPetrola. <br> Molimo Vas da odaberete drugu email adresu.";
     else if ($pumpa !== "Gost")
     {
-        if (!str_ends_with($email, "@peropetrol.com"))
+        if (substr($email, -15) !== "@peropetrol.com")
             exit("Zaposleni PeroPetrola moraju koristiti domen 'peropetrol.com'");
-        
-        if (str_contains($email, "admin"))
+
+        if (strpos($email, "admin") !== false)
             exit("Zabranjen mejl!");
     }
     else
