@@ -19,11 +19,11 @@
     }
 
     // grab optional parameters if entered
-    if (!empty($_POST['staz']))
+    if (is_numeric($_POST['staz']))
         $staz = $_POST['staz'];
-    if (!empty($_POST['plata']))
+    if (is_numeric($_POST['plata']))
         $plata = $_POST['plata'];
-    if (!empty($_POST['godisnji']))
+    if (is_numeric($_POST['godisnji']))
         $godisnji = $_POST['godisnji'];
 
     if (strlen($password) < 8)
@@ -46,7 +46,7 @@
         $parameters = array($firstname, $lastname, $email, $hash);
         
         // optional parameters
-        if (!empty($staz))
+        if (isset($staz))
         {
             if ($staz < 0)
                 exit("Staž ne može biti negativan!");
@@ -57,18 +57,18 @@
             $parameters[] = $staz;
         }
 
-        if (!empty($plata))
+        if (isset($plata))
         {
-            if ($staz < 0)
+            if ($plata < 0)
                 exit("Plata ne može biti negativna!");
-            
+
             $sqlQuery .= ", plata";
             $types .= "d";
             $values .= ", ?";
             $parameters[] = $plata;
         }
 
-        if (!empty($godisnji))
+        if (isset($godisnji))
         {
             if ($godisnji < 0)
                 exit("Godišnji odmor ne može biti negativan!");
