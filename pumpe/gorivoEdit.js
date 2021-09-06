@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var $current_location;
+    let $current_location;
 
     $(".modalButtonIzmjena").click(function(){
         $("#editGorivoModal").show();

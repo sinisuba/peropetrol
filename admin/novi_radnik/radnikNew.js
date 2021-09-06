@@ -1,24 +1,34 @@
-$(document).ready(function(){
-    $("form").submit(function(event){
+window.addEventListener("DOMContentLoaded", function()
+{
+    document.getElementById("form_RadnikNew").onsubmit = function(event)
+    {
         event.preventDefault();
 
-        $.ajax({
-            url: "novi_radnik.php",
-            type: "POST",
-            data: $(this).serialize(),
-            success: function(response) {
-                if (response === "OK")
+        let xhr = new XMLHttpRequest();
+        let data = new FormData(this);
+
+        xhr.onreadystatechange = function()
+        {
+            if (xhr.readyState === 4) // XMLHttpRequest.DONE
+            {
+                if (xhr.status === 200)
                 {
-                    $(".radnikNewInfoMsg").css("color", "green");
-                    $(".radnikNewInfoMsg").html("<b> Radnik uspješno registrovan! </b>");
-                    $("form").trigger("reset"); // reset form upon successful registration
+                    if (xhr.responseText === "OK")
+                    {
+                        document.getElementById("radnikNewInfoMsg").style.color = "green";
+                        document.getElementById("radnikNewInfoMsg").innerHTML = "<b> Radnik uspješno registrovan! </b>";
+                    }
+                    else
+                    {
+                        document.getElementById("radnikNewInfoMsg").style.color = "red";
+                        document.getElementById("radnikNewInfoMsg").innerHTML = "<b>" + xhr.responseText + "</b>";
+                    }
                 }
-                else
-                {
-                    $(".radnikNewInfoMsg").css("color", "red");
-                    $(".radnikNewInfoMsg").html("<b>" + response + "</b>");
-                }
+                else alert("Greška, pokušajte ponovo!");
             }
-        });
-    });
+        }
+
+        xhr.open('POST', 'novi_radnik.php');
+        xhr.send(data);
+    }
 });

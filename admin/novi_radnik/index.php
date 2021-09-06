@@ -34,7 +34,7 @@ if ($_SESSION['role'] !== "admin")
 
     <i> Polja označena sa * moraju biti popunjena! </i>
 
-    <form action="novi_radnik.php" method="POST">
+    <form action="novi_radnik.php" method="POST" id="form_RadnikNew">
         <p><input type="text" placeholder="* Ime" name="firstname" required></p>
         <p><input type="text" placeholder="* Prezime" name="lastname" required></p>
         <p><input type="email" placeholder="* Email" name="email" required></p>
@@ -52,7 +52,7 @@ if ($_SESSION['role'] !== "admin")
         <p><input class="form_button" type="submit" value="Dodaj radnika"></p>
     </form>
 
-    <p class="radnikNewInfoMsg"></p>
+    <p id="radnikNewInfoMsg"></p>
 
 </body>
 </html>

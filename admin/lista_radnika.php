@@ -25,7 +25,7 @@ if ($_SESSION['role'] !== "admin")
 <table class="blueTable">
     <thead>
     <tr>
-        <th>ID</th>
+        <th>#</th>
         <th>Ime</th>
         <th>Prezime</th>
         <th>Email</th>
@@ -36,11 +36,10 @@ if ($_SESSION['role'] !== "admin")
     </tr>
     </thead>
     <tbody>
-    <tr>
         <?php
         require "../db/dbConn.php";
 
-        $sqlQuery = 'SELECT ID, ime, prezime, radnik_email, staz, plata, godisnji, pumpa FROM radnici;';
+        $sqlQuery = 'SELECT ime, prezime, radnik_email, staz, plata, godisnji, pumpa FROM radnici;';
 
         $statement = mysqli_stmt_init($conn);
 
@@ -53,12 +52,11 @@ if ($_SESSION['role'] !== "admin")
             $queryResult = mysqli_stmt_get_result($statement);
 
             while ($currentRow = mysqli_fetch_assoc($queryResult))
-                echo "<tr> <td>" . $currentRow['ID'] . "<td>" . $currentRow['ime'] . " </td> <td>" . $currentRow['prezime'] . "</td> <td class='currentRowEmail'>" . $currentRow['radnik_email'] . "</td> <td>" . $currentRow['staz'] . "</td> <td>" . $currentRow['plata'] . '' . "</td> <td>" . $currentRow['godisnji'] . "</td> <td>" . $currentRow['pumpa'] . "</td> <td class='center'><button class='form_button modalButtonBrisi'>BRIŠI</button></td> <td class='center'><button class='form_button modalButtonIzmjena'>IZMIJENI</button></td> </tr>";
+                echo "<tr> <td>" . $currentRow['ime'] . " </td> <td>" . $currentRow['prezime'] . "</td> <td class='currentRowEmail'>" . $currentRow['radnik_email'] . "</td> <td>" . $currentRow['staz'] . "</td> <td>" . $currentRow['plata'] . '' . "</td> <td>" . $currentRow['godisnji'] . "</td> <td>" . $currentRow['pumpa'] . "</td> <td class='center'><button class='form_button modalButtonBrisi'>BRIŠI</button></td> <td class='center'><button class='form_button modalButtonIzmjena'>IZMIJENI</button></td> </tr>";
         }
 
         mysqli_stmt_close($statement);
         ?>
-    </tr>
     </tbody>
 </table>
 
@@ -82,13 +80,13 @@ if ($_SESSION['role'] !== "admin")
         <p id="selectedRadnik"></p>
 
         <form action="izmjena_radnik.php" method="POST" id="form_RadnikEdit">
-            <p><input type="text" placeholder="Novo ime radnika" name="firstname"></p>
-            <p><input type="text" placeholder="Novo prezime radnika" name="lastname"></p>
-            <p><input type="email" placeholder="Novi email radnika" name="email"></p>
+            <p><input type="text" placeholder="Novo ime radnika" name="firstname" required></p>
+            <p><input type="text" placeholder="Novo prezime radnika" name="lastname" required></p>
+            <p><input type="email" placeholder="Novi email radnika" name="email" required></p>
             <p><input type="password" placeholder="Nova lozinka radnika" name="password"></p>
-            <p><input type="number" min="0" placeholder="Novi staž" name="staz"></p>
-            <p><input type="number" min="0" step="0.01" placeholder="Nova plata" name="plata"></p>
-            <p><input type="number" min="0" placeholder="Novi godišnji odmor" name="godisnji"></p>
+            <p><input type="number" min="0" placeholder="Novi staž" name="staz" required></p>
+            <p><input type="number" min="0" step="0.01" placeholder="Nova plata" name="plata" required></p>
+            <p><input type="number" min="0" placeholder="Novi godišnji odmor" name="godisnji" required></p>
 
             <input list="pumpe" placeholder="Nova pumpa radnika" name="pumpa" pattern="Obilićevo|Starčevica|Petrićevac">
             <datalist id="pumpe">
@@ -100,7 +98,7 @@ if ($_SESSION['role'] !== "admin")
             <p><input class="form_button" type="submit" value="Izmijeni radnika"></p>
         </form>
 
-        <p id="editUserModalErrMsg"></p>
+        <p id="editUserModalInfoMsg"></p>
 
     </div>
 </div>

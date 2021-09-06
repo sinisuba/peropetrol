@@ -14,15 +14,15 @@
     }
 
     if (strlen($password) < 8)
-        echo "Lozinka mora sadržati minimalno 8 karaktera!";
+        exit("Lozinka mora sadržati minimalno 8 karaktera!");
     else if ($password !== $password_repeat)
-        echo "Unesene lozinke se ne podudaraju!";
+        exit("Unesene lozinke se ne podudaraju!");
     else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-        echo "Uneseni email '$email' nije validan!";
+        exit("Uneseni email '$email' nije validan!");
     else if (!in_array($pumpa, ["Obilićevo", "Starčevica", "Petrićevac", "Gost"]))
-        echo "Odaberite jednu od ponuđenih pumpi!";
+        exit("Odaberite jednu od ponuđenih pumpi!");
     else if ($pumpa === "Gost" && substr($email, -15)  === "@peropetrol.com")
-        echo "Domen 'peropetrol.com' je rezervisan za zaposlene PeroPetrola. <br> Molimo Vas da odaberete drugu email adresu.";
+        exit("Domen 'peropetrol.com' je rezervisan za zaposlene PeroPetrola. <br> Molimo Vas da odaberete drugu email adresu.");
     else if ($pumpa !== "Gost")
     {
         if (substr($email, -15) !== "@peropetrol.com")
@@ -36,7 +36,7 @@
         if ($pumpa === "Gost")
             $sqlQuery = "INSERT INTO korisnici(ime, prezime, korisnik_email, korisnik_password) VALUES (?, ?, ?, ?);";
         else $sqlQuery = "INSERT INTO radnici(ime, prezime, radnik_email, radnik_password, pumpa) VALUES (?, ?, ?, ?, ?);";
-        
+
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
         $statement = mysqli_stmt_init($conn);

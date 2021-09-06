@@ -7,6 +7,7 @@ window.addEventListener("DOMContentLoaded", function()
         izmjena_buttons[i].addEventListener('click', izmjenaClicked);
 
     let email;
+    let currentRow;
 
     function izmjenaClicked()
     {
@@ -15,7 +16,7 @@ window.addEventListener("DOMContentLoaded", function()
         email = this.closest("tr").getElementsByClassName("currentRowEmail")[0].innerText;
 
         // this => document.querySelector(".modalButtonIzmjena");
-        let currentRow = this.parentNode.parentNode;
+        currentRow = this.parentNode.parentNode;
 
         document.querySelector("input[name='firstname']").value = currentRow.children[1].innerText;
         document.querySelector("input[name='lastname']").value = currentRow.children[2].innerText;
@@ -28,7 +29,8 @@ window.addEventListener("DOMContentLoaded", function()
         document.getElementById("selectedRadnik").innerHTML = "Radnik <b>" + email + "</b>";
     }
 
-    document.getElementById("form_RadnikEdit").onsubmit = function(event){
+    document.getElementById("form_RadnikEdit").onsubmit = function(event)
+    {
         event.preventDefault();
 
         let xhr = new XMLHttpRequest();
@@ -41,11 +43,22 @@ window.addEventListener("DOMContentLoaded", function()
                 if (xhr.status === 200)
                 {
                     if (xhr.responseText === "OK")
-                        alert("Radnik uspješno izmijenjen.");
+                    {
+                        currentRow.children[1].innerHTML = data.get('firstname');
+                        currentRow.children[2].innerHTML = data.get('lastname');
+                        currentRow.children[3].innerHTML = data.get('email');
+                        currentRow.children[4].innerHTML = data.get('staz');
+                        currentRow.children[5].innerHTML = data.get('plata');
+                        currentRow.children[6].innerHTML = data.get('godisnji');
+                        currentRow.children[7].innerHTML = data.get('pumpa');
+
+                        document.getElementById("editUserModalInfoMsg").style.color = "green";
+                        document.getElementById("editUserModalInfoMsg").innerHTML = "<b> Radnik uspješno izmijenjen. </b>";
+                    }
                     else
                     {
-                        document.getElementById("editUserModalErrMsg").style.color = "red";
-                        document.getElementById("editUserModalErrMsg").innerHTML = "<b>" + xhr.responseText + "</b>";
+                        document.getElementById("editUserModalInfoMsg").style.color = "red";
+                        document.getElementById("editUserModalInfoMsg").innerHTML = "<b>" + xhr.responseText + "</b>";
                     }
                 }
                 else alert("Greška, pokušajte ponovo!");

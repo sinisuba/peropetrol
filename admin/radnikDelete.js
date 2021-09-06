@@ -7,6 +7,7 @@ window.addEventListener("DOMContentLoaded", function()
         brisi_buttons[i].addEventListener('click', brisiClicked);
 
     let email;
+    let selectedRowID;
 
     function brisiClicked()
     {
@@ -30,7 +31,10 @@ window.addEventListener("DOMContentLoaded", function()
                 if (xhr.status === 200)
                 {
                     if (xhr.responseText === "OK")
+                    {
                         alert("Radnik uspješno obrisan.");
+                        location.reload();
+                    }
                     else
                     {
                         document.getElementById("confirmationModalErrMsg").style.color = "red";
