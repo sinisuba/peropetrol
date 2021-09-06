@@ -25,7 +25,6 @@ if ($_SESSION['role'] !== "admin")
 <table class="blueTable">
     <thead>
     <tr>
-        <th>#</th>
         <th>Ime</th>
         <th>Prezime</th>
         <th>Email</th>

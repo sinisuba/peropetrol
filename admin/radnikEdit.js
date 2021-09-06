@@ -18,13 +18,13 @@ window.addEventListener("DOMContentLoaded", function()
         // this => document.querySelector(".modalButtonIzmjena");
         currentRow = this.parentNode.parentNode;
 
-        document.querySelector("input[name='firstname']").value = currentRow.children[1].innerText;
-        document.querySelector("input[name='lastname']").value = currentRow.children[2].innerText;
+        document.querySelector("input[name='firstname']").value = currentRow.children[0].innerText;
+        document.querySelector("input[name='lastname']").value = currentRow.children[1].innerText;
         document.querySelector("input[name='email']").value = email;
-        document.querySelector("input[name='staz']").value = currentRow.children[4].innerText;
-        document.querySelector("input[name='plata']").value = currentRow.children[5].innerText;
-        document.querySelector("input[name='godisnji']").value = currentRow.children[6].innerText;
-        document.querySelector("input[name='pumpa']").value = currentRow.children[7].innerText;
+        document.querySelector("input[name='staz']").value = currentRow.children[3].innerText;
+        document.querySelector("input[name='plata']").value = currentRow.children[4].innerText;
+        document.querySelector("input[name='godisnji']").value = currentRow.children[5].innerText;
+        document.querySelector("input[name='pumpa']").value = currentRow.children[6].innerText;
 
         document.getElementById("selectedRadnik").innerHTML = "Radnik <b>" + email + "</b>";
     }
@@ -34,7 +34,7 @@ window.addEventListener("DOMContentLoaded", function()
         event.preventDefault();
 
         let xhr = new XMLHttpRequest();
-        let data = new FormData(this); // this => document.getElementById("form_RadnikEdit");
+        let data = new FormData(this);
 
         xhr.onreadystatechange = function()
         {
@@ -44,13 +44,13 @@ window.addEventListener("DOMContentLoaded", function()
                 {
                     if (xhr.responseText === "OK")
                     {
-                        currentRow.children[1].innerHTML = data.get('firstname');
-                        currentRow.children[2].innerHTML = data.get('lastname');
-                        currentRow.children[3].innerHTML = data.get('email');
-                        currentRow.children[4].innerHTML = data.get('staz');
-                        currentRow.children[5].innerHTML = data.get('plata');
-                        currentRow.children[6].innerHTML = data.get('godisnji');
-                        currentRow.children[7].innerHTML = data.get('pumpa');
+                        currentRow.children[0].innerHTML = data.get('firstname');
+                        currentRow.children[1].innerHTML = data.get('lastname');
+                        currentRow.children[2].innerHTML = data.get('email');
+                        currentRow.children[3].innerHTML = data.get('staz');
+                        currentRow.children[4].innerHTML = data.get('plata');
+                        currentRow.children[5].innerHTML = data.get('godisnji');
+                        currentRow.children[6].innerHTML = data.get('pumpa');
 
                         document.getElementById("editUserModalInfoMsg").style.color = "green";
                         document.getElementById("editUserModalInfoMsg").innerHTML = "<b> Radnik uspješno izmijenjen. </b>";

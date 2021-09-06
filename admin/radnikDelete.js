@@ -53,10 +53,10 @@ window.addEventListener("DOMContentLoaded", function()
     document.getElementById("deleteUserModalClose").onclick = function()
     {
         document.getElementById("confirmationModal").style.display = "none";
-    };
+    }
 
     document.getElementById("buttonDeleteNo").onclick = function()
     {
         document.getElementById("confirmationModal").style.display = "none";
-    };
+    }
 });
