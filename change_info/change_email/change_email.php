@@ -99,10 +99,7 @@
                 exit("OK");
             }
             else
-            {
-                mysqli_stmt_close($statementNewEmail);
                 exit("Pogrešna lozinka!");
-            }
         }
         else
             exit("Uneseni email ne postoji!");

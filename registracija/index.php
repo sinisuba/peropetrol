@@ -18,10 +18,10 @@ if (isset($_SESSION['role']))
     <title>PeroPetrol - Registracija</title>
 </head>
 <body>
-    
+
     <h1> PeroPetrol - Registracija </h1>
 
-    <form action="registracija.php" method="POST">
+    <form action="registracija.php" method="POST" id="form_Registracija">
         <p><input type="text" placeholder="Ime" name="firstname" required></p>
         <p><input type="text" placeholder="Prezime" name="lastname" required></p>
         <p><input type="email" placeholder="Email" name="email" required></p>
@@ -39,7 +39,7 @@ if (isset($_SESSION['role']))
         <p><input class="form_button" type="submit" value="Registracija"></p>
     </form>
 
-    <p class="registracijaInfoMsg"></p>
+    <p id="registracijaInfoMsg"></p>
 
     <h2> > <a href='../'> Nazad na početnu stranicu </a> </h2>
 

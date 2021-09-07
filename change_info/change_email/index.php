@@ -18,7 +18,7 @@ session_start();
 
     <h1> PeroPetrol - Promjena mejla </h1>
 
-    <form action="change_email.php" method="POST">
+    <form action="change_email.php" method="POST" id="form_EmailChange">
         <?php
             if (!isset($_SESSION['role']))
                 echo '<p><input type="email" placeholder="Trenutni mejl" name="currentEmail" required></p>';
@@ -28,7 +28,7 @@ session_start();
         <p><input class="form_button" type="submit" value="Promijeni mejl"></p>
     </form>
 
-    <p class="emailChangeInfoMsg"></p>
+    <p id="emailChangeInfoMsg"></p>
 
 </body>
 </html>

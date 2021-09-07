@@ -39,7 +39,7 @@
     $statement = mysqli_stmt_init($conn);
     
     if (!mysqli_query($conn, $addColumnGorivo))
-        exit("Gorivo već postoji! <br> <br> <a href='../lista.php' target='_blank'><button class='general_button'>Lista goriva</button></a>");
+        exit("Gorivo već postoji!");
     else if (!mysqli_stmt_prepare($statement, $setGorivoKolicina))
     {
         mysqli_stmt_close($statement);

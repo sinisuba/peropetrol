@@ -18,7 +18,7 @@ session_start();
 
     <h1> PeroPetrol - Promjena lozinke </h1>
 
-    <form action="change_pw.php" method="POST">
+    <form action="change_pw.php" method="POST" id="form_PasswordChange">
         <?php
             if (!isset($_SESSION['role']))
                 echo '<p><input type="email" placeholder="Trenutni mejl" name="currentEmail" required></p>';
@@ -29,7 +29,7 @@ session_start();
         <p><input class="form_button" type="submit" value="Promijeni lozinku"></p>
     </form>
     
-    <p class="pwChangeInfoMsg"></p>
+    <p id="pwChangeInfoMsg"></p>
 
 </body>
 </html>

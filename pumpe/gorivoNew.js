@@ -1,31 +1,44 @@
-$(document).ready(function(){
-    $(".modalButtonAdd").click(function(){
-        $("#addGorivoModal").show();
-    });
-    
-    $("#addGorivo").submit(function(event){
+window.addEventListener("DOMContentLoaded", function()
+{
+    document.getElementById("modalButtonAdd").onclick = function()
+    {
+        document.getElementById("addGorivoModal").style.display = "block";
+    }
+
+    document.getElementById("form_AddGorivo").onsubmit = function(event)
+    {
         event.preventDefault();
 
-        $.ajax({
-            url: "novo_gorivo.php",
-            type: "POST",
-            data: $(this).serialize(),
-            success: function(response) {
-                if (response === "OK")
+        let xhr = new XMLHttpRequest();
+        let data = new FormData(this);
+
+        xhr.onreadystatechange = function()
+        {
+            if (xhr.readyState === 4) // XMLHttpRequest.DONE
+            {
+                if (xhr.status === 200)
                 {
-                    alert("Gorivo uspješno dodano!");
-                    location.reload();
+                    if (xhr.responseText === "OK")
+                    {
+                        alert("Gorivo uspješno dodano!");
+                        location.reload();
+                    }
+                    else
+                    {
+                        document.getElementById("addGorivoModalErrMsg").style.color = "red";
+                        document.getElementById("addGorivoModalErrMsg").innerHTML = "<b>" + xhr.responseText + "</b>";
+                    }
                 }
-                else
-                {
-                    $(".addGorivoModalErrMsg").css("color", "red");
-                    $(".addGorivoModalErrMsg").html("<b>" + response + "</b>");
-                }
+                else alert("Greška, pokušajte ponovo!");
             }
-        });
-    });
-    
-    $(".closeModal").click(function(){
-        $("#addGorivoModal").hide();
-    });
+        }
+
+        xhr.open('POST', 'novo_gorivo.php');
+        xhr.send(data);
+    }
+
+    document.getElementById("addGorivoModalClose").onclick = function()
+    {
+        document.getElementById("addGorivoModal").style.display = "none";
+    }
 });

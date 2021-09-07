@@ -1,18 +1,17 @@
 window.addEventListener("DOMContentLoaded", function()
 {
     let brisi_buttons = document.getElementsByClassName("modalButtonBrisi");
+    let email;
 
     // attach click event listeners [jQ. => $(".modalButtonBrisi").click(...)];
     for (let i = 0; i < document.querySelectorAll('.modalButtonBrisi').length; ++i)
         brisi_buttons[i].addEventListener('click', brisiClicked);
 
-    let email;
-    let selectedRowID;
-
     function brisiClicked()
     {
         document.getElementById("confirmationModal").style.display = "block";
 
+        // this => document.querySelector(".modalButtonBrisi");
         email = this.closest("tr").getElementsByClassName("currentRowEmail")[0].innerText;
 
         document.getElementById("confirmationText").innerHTML = "Jeste li sigurni da želite obrisati radnika <b>" + email + "</b>?";

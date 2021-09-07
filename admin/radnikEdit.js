@@ -1,21 +1,20 @@
 window.addEventListener("DOMContentLoaded", function()
 {
     let izmjena_buttons = document.getElementsByClassName("modalButtonIzmjena");
+    let email;
+    let currentRow;
 
     // attach click event listeners [jQ. => $(".modalButtonIzmjena").click(...)];
     for (let i = 0; i < document.querySelectorAll('.modalButtonIzmjena').length; ++i)
         izmjena_buttons[i].addEventListener('click', izmjenaClicked);
 
-    let email;
-    let currentRow;
-
     function izmjenaClicked()
     {
         document.getElementById("editUserModal").style.display = "block";
 
+        // this => document.querySelector(".modalButtonIzmjena");
         email = this.closest("tr").getElementsByClassName("currentRowEmail")[0].innerText;
 
-        // this => document.querySelector(".modalButtonIzmjena");
         currentRow = this.parentNode.parentNode;
 
         document.querySelector("input[name='firstname']").value = currentRow.children[0].innerText;
@@ -72,6 +71,9 @@ window.addEventListener("DOMContentLoaded", function()
 
     document.getElementById("editUserModalClose").onclick = function()
     {
+        if (document.getElementById("editUserModalInfoMsg").innerText.length > 0)
+            document.getElementById("editUserModalInfoMsg").innerText = "";
+
         document.getElementById("editUserModal").style.display = "none";
     };
 });

@@ -30,39 +30,37 @@
 
         if (strpos($email, "admin") !== false)
             exit("Zabranjen mejl!");
+
+        $sqlQuery = "INSERT INTO radnici(ime, prezime, radnik_email, radnik_password, pumpa) VALUES (?, ?, ?, ?, ?);";
+    }
+    else
+        $sqlQuery = "INSERT INTO korisnici(ime, prezime, korisnik_email, korisnik_password) VALUES (?, ?, ?, ?);";
+
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+
+    $statement = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($statement, $sqlQuery))
+    {
+        mysqli_stmt_close($statement);
+        exit("Greška, pokušajte ponovo.");
     }
     else
     {
         if ($pumpa === "Gost")
-            $sqlQuery = "INSERT INTO korisnici(ime, prezime, korisnik_email, korisnik_password) VALUES (?, ?, ?, ?);";
-        else $sqlQuery = "INSERT INTO radnici(ime, prezime, radnik_email, radnik_password, pumpa) VALUES (?, ?, ?, ?, ?);";
+            mysqli_stmt_bind_param($statement, "ssss", $firstname, $lastname, $email, $hash);
+        else mysqli_stmt_bind_param($statement, "sssss", $firstname, $lastname, $email, $hash, $pumpa);
 
-        $hash = password_hash($password, PASSWORD_DEFAULT);
+        mysqli_stmt_execute($statement);
 
-        $statement = mysqli_stmt_init($conn);
-
-        if (!mysqli_stmt_prepare($statement, $sqlQuery))
+        if (mysqli_stmt_affected_rows($statement) > 0)
         {
             mysqli_stmt_close($statement);
-            exit("Greška, pokušajte ponovo.");
+            exit("OK");
         }
         else
         {
-            if ($pumpa === "Gost")
-                mysqli_stmt_bind_param($statement, "ssss", $firstname, $lastname, $email, $hash);
-            else mysqli_stmt_bind_param($statement, "sssss", $firstname, $lastname, $email, $hash, $pumpa);
-
-            mysqli_stmt_execute($statement);
-
-            if (mysqli_stmt_affected_rows($statement) > 0)
-            {
-                mysqli_stmt_close($statement);
-                exit("OK");
-            }
-            else
-            {
-                mysqli_stmt_close($statement);
-                exit("Korisnik '$email' već postoji. <br> > <a href='../login'>Login</a>");
-            }
+            mysqli_stmt_close($statement);
+            exit("Korisnik '$email' već postoji. <br> > <a href='../login'>Login</a>");
         }
     }

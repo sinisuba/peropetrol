@@ -70,13 +70,13 @@ if (!isset($_SESSION['role']))
                         }
 
                         if ($_SESSION['role'] === "admin")
-                            echo "<td><button class='form_button modalButtonIzmjena'>IZMIJENI</button></td>";
+                            echo "<td><button class='form_button modalButtonIzmjenaGorivo'>IZMIJENI</button></td>";
                         else if ($_SESSION['role'] === "radnik")
                         {
                             include "get_radnik_location.php";
 
                             if ($currentLocation === $radnikLocation)
-                                echo "<td><button class='form_button modalButtonIzmjena'>IZMIJENI</button></td>";
+                                echo "<td><button class='form_button modalButtonIzmjenaGorivo'>IZMIJENI</button></td>";
                         }
 
                         echo "</tr>";
@@ -88,18 +88,18 @@ if (!isset($_SESSION['role']))
 
     <?php
         if ($_SESSION['role'] === "admin" || $_SESSION['role'] === "radnik")
-            echo "<p><button class='form_button modalButtonAdd'>Dodaj novo gorivo</button></p>";
+            echo "<p><button class='form_button' id='modalButtonAdd'>Dodaj novo gorivo</button></p>";
             
         if ($_SESSION['role'] === "admin")
-            echo "<p><button class='form_button modalButtonDelete'>Briši gorivo</button></p>";
+            echo "<p><button class='form_button' id='modalButtonDelete'>Briši gorivo</button></p>";
     ?>
 
     <div id="editGorivoModal" class="modal">
         <div class="modal-content">
-            <button class="closeModal">&times;</button>
+            <button class="closeModal" id="editGorivoModalClose">&times;</button>
 
             <h2> PeroPetrol - Izmjena količine goriva </h2>
-            <form action="izmjena_gorivo.php" method="POST" id="editGorivo">
+            <form action="izmjena_gorivo.php" method="POST" id="form_EditGorivo">
                 <p>
                 <input type="text" placeholder="Naziv goriva" name="gorivo_naziv" required>
                 </p>
@@ -107,31 +107,31 @@ if (!isset($_SESSION['role']))
                 <p><input class="form_button" type="submit" value="Izmjeni gorivo"></p>
             </form>
 
-            <p class="editGorivoModalErrMsg"></p>
+            <p id="editGorivoModalInfoMsg"></p>
         </div>
     </div>
 
     <div id="deleteGorivoModal" class="modal">
         <div class="modal-content">
-            <button class="closeModal">&times;</button>
+            <button class="closeModal" id="deleteGorivoModalClose">&times;</button>
 
             <h2> PeroPetrol - Brisanje goriva </h2>
-            <form action="brisi_gorivo.php" method="POST" id="deleteGorivo">
+            <form action="brisi_gorivo.php" method="POST" id="form_DeleteGorivo">
                 <p><input type="text" placeholder="Naziv goriva" name="gorivo_naziv" required></p>
                 <p><input class="form_button" type="submit" value="Izbriši gorivo"></p>
             </form>
 
-            <p class="deleteGorivoModalErrMsg"></p>
+            <p id="deleteGorivoModalErrMsg"></p>
         </div>
     </div>
 
     <div id="addGorivoModal" class="modal">
         <div class="modal-content">
-            <button class="closeModal">&times;</button>
+            <button class="closeModal" id="addGorivoModalClose">&times;</button>
 
             <h2> PeroPetrol - Novo gorivo </h2>
 
-            <form action="novo_gorivo.php" method="POST" id="addGorivo">
+            <form action="novo_gorivo.php" method="POST" id="form_AddGorivo">
                 <?php
                     if ($_SESSION['role'] === "admin")
                     {
@@ -153,7 +153,7 @@ if (!isset($_SESSION['role']))
                 <p><input class="form_button" type="submit" value="Dodaj gorivo"></p>
             </form>
 
-            <p class="addGorivoModalErrMsg"></p>
+            <p id="addGorivoModalErrMsg"></p>
         </div>
     </div>
 

@@ -1,24 +1,35 @@
-$(document).ready(function(){
-    $("form").submit(function(event){
+window.addEventListener("DOMContentLoaded", function()
+{
+    document.getElementById("form_EmailChange").onsubmit = function(event)
+    {
         event.preventDefault();
 
-        $.ajax({
-            url: "change_email.php",
-            type: "POST",
-            data: $(this).serialize(),
-            success: function(response) {
-                if (response === "OK")
+        let xhr = new XMLHttpRequest();
+        let data = new FormData(this);
+
+        xhr.onreadystatechange = function()
+        {
+            if (xhr.readyState === 4) // XMLHttpRequest.DONE
+            {
+                if (xhr.status === 200)
                 {
-                    $(".emailChangeInfoMsg").css("color", "green");
-                    $(".emailChangeInfoMsg").html("<b> Mejl uspješno promijenjen. </b>" + "<br> > <a href='../../login'> Login </a>");
-                    $("form").trigger("reset"); // reset form upon successful email change
+                    if (xhr.responseText === "OK")
+                    {
+                        document.getElementById("emailChangeInfoMsg").style.color = "green";
+                        document.getElementById("emailChangeInfoMsg").innerHTML = "<b> Mejl uspješno promijenjen. </b>" + "<br> > <a href='../../login'> Login </a>";
+                        document.getElementById("form_EmailChange").reset(); // reset form upon successful email change
+                    }
+                    else
+                    {
+                        document.getElementById("emailChangeInfoMsg").style.color = "red";
+                        document.getElementById("emailChangeInfoMsg").innerHTML = "<b>" + xhr.responseText + "</b>";
+                    }
                 }
-                else
-                {
-                    $(".emailChangeInfoMsg").css("color", "red");
-                    $(".emailChangeInfoMsg").html("<b>" + response + "</b>");
-                }
+                else alert("Greška, pokušajte ponovo!");
             }
-        });
-    });
+        }
+
+        xhr.open('POST', 'change_email.php');
+        xhr.send(data);
+    }
 });
