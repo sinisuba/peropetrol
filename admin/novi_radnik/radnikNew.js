@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", function()
 {
-    document.getElementById("form_RadnikNew").onsubmit = function(event)
+    document.getElementById("form_RadnikNew").addEventListener("submit", function(event)
     {
         event.preventDefault();
 
@@ -30,5 +30,5 @@ window.addEventListener("DOMContentLoaded", function()
 
         xhr.open('POST', 'novi_radnik.php');
         xhr.send(data);
-    }
+    });
 });

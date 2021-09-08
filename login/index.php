@@ -2,7 +2,11 @@
 session_start();
 
 if (isset($_SESSION['role']))
-    header("Location: https://localhost/peropetrol/");
+{
+    $redirect = "https://" . $_SERVER['HTTP_HOST'] . "/peropetrol/";
+
+    header("Location: $redirect");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", function()
 {
-    document.getElementById("form_PasswordChange").onsubmit = function(event)
+    document.getElementById("form_PasswordChange").addEventListener("submit", function(event)
     {
         event.preventDefault();
 
@@ -31,5 +31,5 @@ window.addEventListener("DOMContentLoaded", function()
 
         xhr.open('POST', 'change_pw.php');
         xhr.send(data);
-    }
+    });
 });

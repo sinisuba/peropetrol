@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", function()
 {
-    document.getElementById("form_Registracija").onsubmit = function(event)
+    document.getElementById("form_Registracija").addEventListener("submit", function(event)
     {
         event.preventDefault();
 
@@ -17,7 +17,7 @@ window.addEventListener("DOMContentLoaded", function()
                     {
                         document.getElementById("registracijaInfoMsg").style.color = "green";
                         document.getElementById("registracijaInfoMsg").innerHTML = "<b> Uspješna registracija. </b>" + "<br> > <a href='../login'> Login </a>"
-                        document.getElementById("form_Registracija").reset();
+                        document.getElementById("form_Registracija").reset(); // reset form upon successful registration
                     }
                     else
                     {
@@ -31,5 +31,5 @@ window.addEventListener("DOMContentLoaded", function()
 
         xhr.open('POST', 'registracija.php');
         xhr.send(data);
-    }
+    });
 });

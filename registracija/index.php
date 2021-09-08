@@ -2,7 +2,11 @@
 session_start();
 
 if (isset($_SESSION['role']))
-    header("Location: https://localhost/peropetrol/");
+{
+    $redirect = "https://" . $_SERVER['HTTP_HOST'] . "/peropetrol/";
+
+    exit("<h3> Nemate pristup ovoj stranici. </h3> <p> Molimo Vas da se <a href='$redirect/login/'>prijavite</a>. </p>");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

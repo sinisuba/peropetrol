@@ -1,10 +1,12 @@
 <?php
 session_start();
 
+$redirect = "https://" . $_SERVER['HTTP_HOST'] . "/peropetrol/";
+
 if (!isset($_SESSION['role']))
-    exit("<h3> Nemate pristup ovoj stranici. </h3> <p> Molimo Vas da se <a href='https://localhost/peropetrol/login/'>prijavite</a>. </p>");    
+    exit("<h3> Nemate pristup ovoj stranici. </h3> <p> Molimo Vas da se <a href='$redirect/login/'>prijavite</a>. </p>");
 else if ($_SESSION['role'] !== "radnik")
-    header("Location: https://localhost/peropetrol/");
+    header("Location: $redirect");
 ?>
 <!DOCTYPE html>
 <html lang="en">

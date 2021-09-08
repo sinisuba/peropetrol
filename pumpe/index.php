@@ -1,2 +1,4 @@
 <?php
-    header("Location: https://localhost/peropetrol/");
+    $redirect = "https://" . $_SERVER['HTTP_HOST'] . "/peropetrol/";
+
+    header("Location: $redirect");

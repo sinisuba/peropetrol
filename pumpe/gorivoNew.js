@@ -1,11 +1,11 @@
 window.addEventListener("DOMContentLoaded", function()
 {
-    document.getElementById("modalButtonAdd").onclick = function()
+    document.getElementById("modalButtonAdd").addEventListener("click", function()
     {
         document.getElementById("addGorivoModal").style.display = "block";
-    }
+    });
 
-    document.getElementById("form_AddGorivo").onsubmit = function(event)
+    document.getElementById("form_AddGorivo").addEventListener("submit", function(event)
     {
         event.preventDefault();
 
@@ -35,10 +35,10 @@ window.addEventListener("DOMContentLoaded", function()
 
         xhr.open('POST', 'novo_gorivo.php');
         xhr.send(data);
-    }
+    });
 
-    document.getElementById("addGorivoModalClose").onclick = function()
+    document.getElementById("addGorivoModalClose").addEventListener("click", function()
     {
         document.getElementById("addGorivoModal").style.display = "none";
-    }
+    });
 });

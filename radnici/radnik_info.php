@@ -3,7 +3,11 @@
     session_start();
 
     if ($_SESSION['role'] !== "radnik")
-        header("Location: https://localhost/peropetrol/");
+    {
+        $redirect = "https://" . $_SERVER['HTTP_HOST'] . "/peropetrol/";
+
+        exit("<h3> Nemate pristup ovoj stranici. </h3> <p> Molimo Vas da se <a href='$redirect/login/'>prijavite</a>. </p>");
+    }
     else
     {
         require "../db/dbConn.php";

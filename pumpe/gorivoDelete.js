@@ -1,11 +1,11 @@
 window.addEventListener("DOMContentLoaded", function()
 {
-    document.getElementById("modalButtonDelete").onclick = function()
+    document.getElementById("modalButtonDelete").addEventListener("click", function()
     {
         document.getElementById("deleteGorivoModal").style.display = "block";
-    }
+    });
 
-    document.getElementById("form_DeleteGorivo").onsubmit = function(event)
+    document.getElementById("form_DeleteGorivo").addEventListener("submit", function(event)
     {
         event.preventDefault();
 
@@ -35,10 +35,10 @@ window.addEventListener("DOMContentLoaded", function()
 
         xhr.open('POST', 'brisi_gorivo.php');
         xhr.send(data);
-    }
+    });
 
-    document.getElementById("deleteGorivoModalClose").onclick = function()
+    document.getElementById("deleteGorivoModalClose").addEventListener("click", function()
     {
         document.getElementById("deleteGorivoModal").style.display = "none";
-    }
+    });
 });

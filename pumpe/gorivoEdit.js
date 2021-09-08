@@ -1,8 +1,6 @@
 window.addEventListener("DOMContentLoaded", function()
 {
     let izmjenaGorivo_buttons = document.getElementsByClassName("modalButtonIzmjenaGorivo");
-    let current_location;
-    let currentRow;
 
     // attach click event listeners [jQ. => $(".modalButtonIzmjenaGorivo").click(...)];
     for (let i = 0; i < document.querySelectorAll('.modalButtonIzmjenaGorivo').length; ++i)
@@ -10,53 +8,47 @@ window.addEventListener("DOMContentLoaded", function()
 
     function izmjenaGorivoClicked()
     {
-        document.getElementById("editGorivoModal").style.display = "block";
-
-        current_location = this.closest("tr").getElementsByClassName("currentRowLocation")[0].innerText;
-
         // this => document.querySelector(".modalButtonIzmjenaGorivo");
-        currentRow = this.parentNode.parentNode;
-    }
+        let currentRow = this.parentNode.parentNode;
+        let currentLocation = this.closest("tr").getElementsByClassName("currentRowLocation")[0].innerText;
+        let fuelCount = currentRow.cells.length -3; // -3 to skip ID/location/edit fuel button
+        let tablePumpeHeader = document.getElementById("tablePumpeHeader");
 
-    document.getElementById("form_EditGorivo").onsubmit = function(event)
-    {
-        event.preventDefault();
-
-        let xhr = new XMLHttpRequest();
-        let data = new FormData(this);
-
-        xhr.onreadystatechange = function()
+        if (fuelCount <= 0)
+            alert("Ne postoji nijedno gorivo!");
+        else
         {
-            if (xhr.readyState === 4) // XMLHttpRequest.DONE
+            let fuelData = new FormData();
+
+            for (let i = 2; i < fuelCount + 2; ++i) // first fuel has index 2
+                fuelData.append(tablePumpeHeader.children[i].innerHTML, currentRow.children[i].innerHTML);
+
+            let xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function()
             {
-                if (xhr.status === 200)
+                if (xhr.readyState === 4) // XMLHttpRequest.DONE
                 {
-                    if (xhr.responseText === "OK")
+                    if (xhr.status === 200)
                     {
-                        // currentRow.children[0].innerHTML = data.get('gorivo_naziv');
-                        document.getElementById("editGorivoModalInfoMsg").style.color = "green";
-                        document.getElementById("editGorivoModalInfoMsg").innerHTML = "<b> Količina goriva uspješno izmijenjena. </b>";
+                        if (xhr.responseText === "OK")
+                        {
+                            document.getElementById("editFuelInfoMsg").style.color = "green";
+                            document.getElementById("editFuelInfoMsg").innerHTML = "<b> Goriva uspješno izmijenjena. </b>";
+                        }
+                        else
+                        {
+                            document.getElementById("editFuelInfoMsg").style.color = "red";
+                            document.getElementById("editFuelInfoMsg").innerHTML = "<b>" + xhr.responseText + "</b>";
+                        }
                     }
-                    else
-                    {
-                        document.getElementById("editGorivoModalInfoMsg").style.color = "red";
-                        document.getElementById("editGorivoModalInfoMsg").innerHTML = "<b>" + xhr.responseText + "</b>";
-                    }
+                    else alert("Greška, pokušajte ponovo!");
                 }
-                else alert("Greška, pokušajte ponovo!");
             }
+
+            xhr.open('POST', 'izmjena_gorivo.php');
+            fuelData.append("lokacija", currentLocation);
+            xhr.send(fuelData);
         }
-
-        xhr.open('POST', 'izmjena_gorivo.php');
-        data.append("selectedLocation", current_location);
-        xhr.send(data);
-    }
-
-    document.getElementById("editGorivoModalClose").onclick = function()
-    {
-        if (document.getElementById("editGorivoModalInfoMsg").innerText.length > 0)
-            document.getElementById("editGorivoModalInfoMsg").innerText = "";
-
-        document.getElementById("editGorivoModal").style.display = "none";
     }
 });

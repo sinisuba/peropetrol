@@ -1,8 +1,12 @@
 <?php
     session_start();
 
-    if ($_SESSION['role'] !== "admin") 
-        header("Location: https://localhost/peropetrol/");
+    if ($_SESSION['role'] !== "admin")
+    {
+        $redirect = "https://" . $_SERVER['HTTP_HOST'] . "/peropetrol/";
+
+        header("Location: $redirect");
+    }
 
     require "../db/dbConn.php";
 

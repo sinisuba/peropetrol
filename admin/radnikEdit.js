@@ -28,7 +28,7 @@ window.addEventListener("DOMContentLoaded", function()
         document.getElementById("selectedRadnik").innerHTML = "Radnik <b>" + email + "</b>";
     }
 
-    document.getElementById("form_RadnikEdit").onsubmit = function(event)
+    document.getElementById("form_RadnikEdit").addEventListener("submit", function(event)
     {
         event.preventDefault();
 
@@ -67,13 +67,13 @@ window.addEventListener("DOMContentLoaded", function()
         xhr.open('POST', 'izmjena_radnik.php');
         data.append("selectedUserEmail", email);
         xhr.send(data);
-    }
+    });
 
-    document.getElementById("editUserModalClose").onclick = function()
+    document.getElementById("editUserModalClose").addEventListener("submit", function()
     {
         if (document.getElementById("editUserModalInfoMsg").innerText.length > 0)
             document.getElementById("editUserModalInfoMsg").innerText = "";
 
         document.getElementById("editUserModal").style.display = "none";
-    };
+    });
 });

@@ -49,13 +49,13 @@ window.addEventListener("DOMContentLoaded", function()
         xhr.send(data);
     }
 
-    document.getElementById("deleteUserModalClose").onclick = function()
+    document.getElementById("deleteUserModalClose").addEventListener("click", function()
     {
         document.getElementById("confirmationModal").style.display = "none";
-    }
+    });
 
-    document.getElementById("buttonDeleteNo").onclick = function()
+    document.getElementById("buttonDeleteNo").addEventListener("click", function()
     {
         document.getElementById("confirmationModal").style.display = "none";
-    }
+    });
 });

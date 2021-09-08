@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", function()
 {
-    document.getElementById("form_EmailChange").onsubmit = function(event)
+    document.getElementById("form_EmailChange").addEventListener("submit", function(event)
     {
         event.preventDefault();
 
@@ -31,5 +31,5 @@ window.addEventListener("DOMContentLoaded", function()
 
         xhr.open('POST', 'change_email.php');
         xhr.send(data);
-    }
+    });
 });

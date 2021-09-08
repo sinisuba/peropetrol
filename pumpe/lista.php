@@ -2,7 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['role']))
-    exit("<h3> Nemate pristup ovoj stranici. </h3> <p> Molimo Vas da se <a href='https://localhost/peropetrol/login/'>prijavite</a>. </p>");    
+{
+    $redirect = "https://" . $_SERVER['HTTP_HOST'] . "/peropetrol/";
+
+    exit("<h3> Nemate pristup ovoj stranici. </h3> <p> Molimo Vas da se <a href='$redirect/login/'>prijavite</a>. </p>");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +35,7 @@ if (!isset($_SESSION['role']))
 
     <table class="blueTable">
         <thead>
-            <tr>
+            <tr id="tablePumpeHeader">
                 <?php
                     require_once "../db/dbConn.php";
 
@@ -61,17 +65,21 @@ if (!isset($_SESSION['role']))
                         
                         for ($i = 0; $i < count($currentRow); ++$i)
                         {
-                            if ($i === 1) // current location
+                            if ($i === 0) // ID column
+                                echo "<td>" . $currentRow[$i] . "</td>";
+                            else if ($i === 1) // location column
                             {
                                 echo "<td class='currentRowLocation'>" . $currentRow[$i] . "</td>";
                                 $currentLocation = $currentRow[$i];
                             }
-                            else echo "<td>" . $currentRow[$i] . "</td>";
+                            else // fuel columns
+                                echo "<td contenteditable>" . $currentRow[$i] . "</td>"; // allow edits from within the table
                         }
 
-                        if ($_SESSION['role'] === "admin")
+                        // 'count($currentRow) > 2' checks if any fuel columns exist before implementing the edit fuel button
+                        if ($_SESSION['role'] === "admin" && count($currentRow) > 2)
                             echo "<td><button class='form_button modalButtonIzmjenaGorivo'>IZMIJENI</button></td>";
-                        else if ($_SESSION['role'] === "radnik")
+                        else if ($_SESSION['role'] === "radnik" && count($currentRow) > 2)
                         {
                             include "get_radnik_location.php";
 
@@ -86,6 +94,8 @@ if (!isset($_SESSION['role']))
         </tbody>
     </table>
 
+    <p id="editFuelInfoMsg"></p>
+
     <?php
         if ($_SESSION['role'] === "admin" || $_SESSION['role'] === "radnik")
             echo "<p><button class='form_button' id='modalButtonAdd'>Dodaj novo gorivo</button></p>";
@@ -93,23 +103,6 @@ if (!isset($_SESSION['role']))
         if ($_SESSION['role'] === "admin")
             echo "<p><button class='form_button' id='modalButtonDelete'>Briši gorivo</button></p>";
     ?>
-
-    <div id="editGorivoModal" class="modal">
-        <div class="modal-content">
-            <button class="closeModal" id="editGorivoModalClose">&times;</button>
-
-            <h2> PeroPetrol - Izmjena količine goriva </h2>
-            <form action="izmjena_gorivo.php" method="POST" id="form_EditGorivo">
-                <p>
-                <input type="text" placeholder="Naziv goriva" name="gorivo_naziv" required>
-                </p>
-                <p><input type="number" min="0" placeholder="Nova količina goriva (l)" name="gorivo_kolicina" required></p>
-                <p><input class="form_button" type="submit" value="Izmjeni gorivo"></p>
-            </form>
-
-            <p id="editGorivoModalInfoMsg"></p>
-        </div>
-    </div>
 
     <div id="deleteGorivoModal" class="modal">
         <div class="modal-content">
