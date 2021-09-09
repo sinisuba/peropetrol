@@ -2,7 +2,7 @@ window.addEventListener("DOMContentLoaded", function()
 {
     let izmjenaGorivo_buttons = document.getElementsByClassName("modalButtonIzmjenaGorivo");
 
-    // attach click event listeners [jQ. => $(".modalButtonIzmjenaGorivo").click(...)];
+    // attach click event listeners
     for (let i = 0; i < document.querySelectorAll('.modalButtonIzmjenaGorivo').length; ++i)
         izmjenaGorivo_buttons[i].addEventListener('click', izmjenaGorivoClicked);
 
@@ -14,7 +14,7 @@ window.addEventListener("DOMContentLoaded", function()
         let fuelCount = currentRow.cells.length -3; // -3 to skip ID/location/edit fuel button
         let tablePumpeHeader = document.getElementById("tablePumpeHeader");
 
-        if (fuelCount <= 0)
+        if (fuelCount < 1)
             alert("Ne postoji nijedno gorivo!");
         else
         {

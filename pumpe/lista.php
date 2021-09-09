@@ -20,7 +20,7 @@ if (!isset($_SESSION['role']))
         width: 33% !important;
     }
     </style>
-    
+
     <link href="../styles.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -74,7 +74,7 @@ if (!isset($_SESSION['role']))
                             {
                                 if ($_SESSION['role'] === "admin")
                                     echo "<td contenteditable>" . $currentRow[$i] . "</td>"; // allow edits from within the table
-                                else // radnik
+                                else if ($_SESSION['role'] === "radnik")
                                 {
                                     require_once "get_radnik_location.php";
 
@@ -82,6 +82,7 @@ if (!isset($_SESSION['role']))
                                         echo "<td contenteditable>" . $currentRow[$i] . "</td>";
                                     else echo "<td>" . $currentRow[$i] . "</td>";
                                 }
+                                else echo "<td>" . $currentRow[$i] . "</td>";
                             }
                         }
 
@@ -108,7 +109,7 @@ if (!isset($_SESSION['role']))
     <?php
         if ($_SESSION['role'] === "admin" || $_SESSION['role'] === "radnik")
             echo "<p><button class='form_button' id='modalButtonAdd'>Dodaj novo gorivo</button></p>";
-            
+
         if ($_SESSION['role'] === "admin")
             echo "<p><button class='form_button' id='modalButtonDelete'>Briši gorivo</button></p>";
     ?>

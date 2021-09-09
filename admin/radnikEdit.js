@@ -4,7 +4,7 @@ window.addEventListener("DOMContentLoaded", function()
     let email;
     let currentRow;
 
-    // attach click event listeners [jQ. => $(".modalButtonIzmjena").click(...)];
+    // attach click event listeners
     for (let i = 0; i < document.querySelectorAll('.modalButtonIzmjena').length; ++i)
         izmjena_buttons[i].addEventListener('click', izmjenaClicked);
 

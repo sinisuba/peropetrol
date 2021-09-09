@@ -3,7 +3,7 @@ window.addEventListener("DOMContentLoaded", function()
     let brisi_buttons = document.getElementsByClassName("modalButtonBrisi");
     let email;
 
-    // attach click event listeners [jQ. => $(".modalButtonBrisi").click(...)];
+    // attach click event listeners
     for (let i = 0; i < document.querySelectorAll('.modalButtonBrisi').length; ++i)
         brisi_buttons[i].addEventListener('click', brisiClicked);
 
