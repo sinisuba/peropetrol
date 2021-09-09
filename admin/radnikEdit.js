@@ -69,7 +69,7 @@ window.addEventListener("DOMContentLoaded", function()
         xhr.send(data);
     });
 
-    document.getElementById("editUserModalClose").addEventListener("submit", function()
+    document.getElementById("editUserModalClose").addEventListener("click", function()
     {
         if (document.getElementById("editUserModalInfoMsg").innerText.length > 0)
             document.getElementById("editUserModalInfoMsg").innerText = "";

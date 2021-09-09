@@ -26,6 +26,9 @@
         if (substr($email, -15) !== "@peropetrol.com")
             exit("Radnici moraju koristiti domen 'peropetrol.com'");
 
+        if (strpos($email, "admin") !== false)
+            exit('Zabranjen mejl!');
+
         if ($_POST['staz'] < 0)
             exit("Staž ne može biti negativan!");
 

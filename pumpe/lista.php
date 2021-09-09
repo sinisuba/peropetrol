@@ -11,8 +11,6 @@ if (!isset($_SESSION['role']))
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- jQuery -->
-    <script src="//code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="gorivoEdit.js"></script>
     <script src="gorivoDelete.js"></script>
     <script src="gorivoNew.js"></script>
@@ -62,7 +60,7 @@ if (!isset($_SESSION['role']))
                         echo "<tr>";
 
                         $currentLocation = "";
-                        
+
                         for ($i = 0; $i < count($currentRow); ++$i)
                         {
                             if ($i === 0) // ID column
@@ -73,7 +71,18 @@ if (!isset($_SESSION['role']))
                                 $currentLocation = $currentRow[$i];
                             }
                             else // fuel columns
-                                echo "<td contenteditable>" . $currentRow[$i] . "</td>"; // allow edits from within the table
+                            {
+                                if ($_SESSION['role'] === "admin")
+                                    echo "<td contenteditable>" . $currentRow[$i] . "</td>"; // allow edits from within the table
+                                else // radnik
+                                {
+                                    require_once "get_radnik_location.php";
+
+                                    if ($currentLocation === $radnikLocation)
+                                        echo "<td contenteditable>" . $currentRow[$i] . "</td>";
+                                    else echo "<td>" . $currentRow[$i] . "</td>";
+                                }
+                            }
                         }
 
                         // 'count($currentRow) > 2' checks if any fuel columns exist before implementing the edit fuel button
@@ -81,7 +90,7 @@ if (!isset($_SESSION['role']))
                             echo "<td><button class='form_button modalButtonIzmjenaGorivo'>IZMIJENI</button></td>";
                         else if ($_SESSION['role'] === "radnik" && count($currentRow) > 2)
                         {
-                            include "get_radnik_location.php";
+                            require_once "get_radnik_location.php";
 
                             if ($currentLocation === $radnikLocation)
                                 echo "<td><button class='form_button modalButtonIzmjenaGorivo'>IZMIJENI</button></td>";

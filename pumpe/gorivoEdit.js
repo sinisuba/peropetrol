@@ -21,7 +21,12 @@ window.addEventListener("DOMContentLoaded", function()
             let fuelData = new FormData();
 
             for (let i = 2; i < fuelCount + 2; ++i) // first fuel has index 2
-                fuelData.append(tablePumpeHeader.children[i].innerHTML, currentRow.children[i].innerHTML);
+            {
+                let fuelName = tablePumpeHeader.children[i].innerHTML;
+                let fuelValue = currentRow.children[i].innerHTML;
+
+                fuelData.append(fuelName, fuelValue);
+            }
 
             let xhr = new XMLHttpRequest();
 
